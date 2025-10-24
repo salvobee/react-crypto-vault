@@ -1,0 +1,28 @@
+{
+  "name": "@salvobee/react-crypto-vault",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "React bindings for @salvobee/crypto-vault – easy encrypted content rendering with key context.",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.1.1"
+  },
+  "dependencies": {
+    "@salvobee/crypto-vault": "^1.0.0"
+  },
+  "keywords": [
+    "react",
+    "crypto",
+    "aes-gcm",
+    "encryption",
+    "webcrypto",
+    "browser",
+    "secure-storage"
+  ],
+  "author": "Salvo Bee",
+  "license": "MIT"
+}
