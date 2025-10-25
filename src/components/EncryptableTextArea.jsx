@@ -11,7 +11,8 @@ export default function EncryptableTextArea({
                                                 autoEncrypt = true,
                                                 compress = true,
                                                 style = {},
-                                                placeholder = "Scrivi qui..."
+                                                className = '',
+                                                placeholder = "Type Here..."
                                             }) {
     const { cryptoKey } = useCrypto();
     const [plainText, setPlainText] = useState("");
@@ -47,7 +48,7 @@ export default function EncryptableTextArea({
             onChange(packed);
         } catch (e) {
             console.error(e);
-            alert("Errore crittando il testo.");
+            alert("Errore encrypting text.");
         } finally {
             setBusy(false);
         }
@@ -59,7 +60,7 @@ export default function EncryptableTextArea({
         try {
             const packed = await encryptString(plainText, cryptoKey, { compress });
             onChange(packed);
-            alert("Testo crittato!");
+            alert("Text Encrypted!");
         } finally {
             setBusy(false);
         }
@@ -74,7 +75,8 @@ export default function EncryptableTextArea({
               onChange={(e) => setPlainText(e.target.value)}
               onBlur={handleBlur}
               placeholder={placeholder}
-              style={{ width: "100%", minHeight: "100px", fontFamily: "monospace", ...style }}
+              className={className}
+              style={style}
           />
                     {busy && <progress value={progress} max="100" style={{ width: "100%" }} />}
                     {!autoEncrypt && (

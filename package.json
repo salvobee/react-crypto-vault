@@ -1,6 +1,6 @@
 {
   "name": "@salvobee/react-crypto-vault",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "React bindings for @salvobee/crypto-vault – easy encrypted content rendering with key context.",
   "main": "./src/index.js",
