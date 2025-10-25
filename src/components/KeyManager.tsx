@@ -1,16 +1,18 @@
 import React from "react";
 import {
-    generateAesKey,
+    downloadText,
     exportKeyToBase64,
-    importKeyFromBase64,
-    downloadText
+    generateAesKey,
+    importKeyFromBase64
 } from "@salvobee/crypto-vault";
-import { useCrypto } from "../context/CryptoContext.jsx";
+import { useCrypto } from "../context/CryptoContext";
 
-export default function KeyManager({
-                                       showGenerate = true,
-                                       showExport = true
-                                   }) {
+export interface KeyManagerProps {
+    showGenerate?: boolean;
+    showExport?: boolean;
+}
+
+export default function KeyManager({ showGenerate = true, showExport = true }: KeyManagerProps) {
     const { cryptoKey, setCryptoKey } = useCrypto();
 
     const handleToggle = async () => {
@@ -19,13 +21,16 @@ export default function KeyManager({
             alert("🔓 Chiave rimossa.");
             return;
         }
+
         const b64 = prompt("Incolla qui la chiave Base64URL da importare:");
         if (!b64) return;
+
         try {
             const key = await importKeyFromBase64(b64);
             setCryptoKey(key);
             alert("🔐 Chiave importata con successo!");
-        } catch (e) {
+        } catch (error) {
+            console.error("Error importing key", error);
             alert("Errore importando la chiave.");
         }
     };
@@ -37,7 +42,10 @@ export default function KeyManager({
     };
 
     const handleExport = async () => {
-        if (!cryptoKey) return alert("Nessuna chiave da esportare.");
+        if (!cryptoKey) {
+            alert("Nessuna chiave da esportare.");
+            return;
+        }
         const b64 = await exportKeyToBase64(cryptoKey);
         downloadText("vault-key.b64u.txt", b64);
         alert("Chiave esportata come file.");
@@ -51,6 +59,8 @@ export default function KeyManager({
             <div
                 onClick={handleToggle}
                 title={title}
+                role="button"
+                aria-label={title}
                 style={{
                     width: "16px",
                     height: "16px",
@@ -61,12 +71,12 @@ export default function KeyManager({
                 }}
             />
             {showGenerate && (
-                <button onClick={handleGenerate} style={{ fontSize: "12px" }}>
+                <button type="button" onClick={handleGenerate} style={{ fontSize: "12px" }}>
                     Genera
                 </button>
             )}
             {showExport && (
-                <button onClick={handleExport} style={{ fontSize: "12px" }}>
+                <button type="button" onClick={handleExport} style={{ fontSize: "12px" }}>
                     Esporta
                 </button>
             )}

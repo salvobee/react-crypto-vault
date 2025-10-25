@@ -1,11 +1,23 @@
 {
   "name": "@salvobee/react-crypto-vault",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "description": "React bindings for @salvobee/crypto-vault – easy encrypted content rendering with key context.",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": "^19.2.0",
@@ -13,6 +25,11 @@
   },
   "dependencies": {
     "@salvobee/crypto-vault": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "typescript": "^5.5.4"
   },
   "keywords": [
     "react",
